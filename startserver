@@ -1,0 +1,5 @@
+#!/bin/bash
+touch log
+touch opentickets
+touch SLAtimes
+python srv.py |& tee -a log > /dev/null &
