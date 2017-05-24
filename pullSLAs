@@ -1,0 +1,14 @@
+#!/bin/bash
+
+> SLAtimes
+
+TOKEN=$(cat token)
+CREDENTIALS=$(cat creds)
+TARGET=$(cat target)
+
+while read i; do
+    TESTSLA=$(curl -s -u $CREDENTIALS/token:$TOKEN "https://$TARGET/api/v2/tickets/$i.json?include=slas" | ruby prettify_json.rb) > /dev/null
+    echo -n "$i " >> SLAtimes
+    breachtime=$(echo "$TESTSLA" | grep breach_at | awk '{print $2}' | sed 's/\"//g' | sed 's/.$//')
+    if [ -z $breachtime ]; then echo "null" >> SLAtimes ; else echo $breachtime >> SLAtimes ; fi
+done <opentickets
