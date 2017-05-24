@@ -1,2 +1,9 @@
+preinstall:
+have python
+have ruby
+ideally don't be running any other python
+
+run:
 drop all the goodies in their own directory
+create files creds, target, token with your login username (a@b.c), zendesk URL, and API token
 run startserver
