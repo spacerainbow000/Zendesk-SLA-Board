@@ -66,3 +66,4 @@ if opts['i'] && filename
   File.open(filename, 'w') { |f| f.puts output }
 else
   puts output
+end
