@@ -2,3 +2,4 @@
 
 ./getopentickets
 ./pullSLAs
+sed -i '/null/d' ./SLAtimes
