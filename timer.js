@@ -1,24 +1,35 @@
-function createTimer(ticketnumber, duration, element) {
+var ticketCount = {};
+
+function createTimer(duration, element) {
+
     var timer = duration, minutes, seconds;
+        var sec_num = parseInt(duration, 10);
+    hours   = Math.floor(sec_num / 3600);
+    minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    element.textContent = hours + ":" + minutes + ":" + seconds;
+
     setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        element.textContent = ticketnumber + ":: " + minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
+                cc= (3600 * hours) + (60 * minutes) + seconds;
+                console.log("initial cc of " + element.id + " is " + cc);
+                if (--cc <= 0)
+                        element.textContent = "BREACHED!!!"
+                else
+                {
+//                      hours   = Math.floor(cc / 3600);
+                        minutes = Math.floor((cc - (hours * 3600)) / 60);
+                        seconds = cc - (hours * 3600) - (minutes * 60);
+                        console.log("setting hours of element " + element.id + " to " + hours + "; cc is " + cc);
+                        element.textContent = hours + ":" + minutes + ":" + seconds;
+                }
     }, 1000);
 }
 
 function writeTable(count) {
     table = document.querySelector('#tableprint');
-    var myTable="<table border='1'><tr><td style='width: 100px; color: red;'>TICKET NUMBER</td>";
-    myTable+= "<td style='width: 100px; color: red; text-align: right;'>SLA TIME</td>";
+    var myTable="<table border='1'><tr><td style='margin: 0px; color: red;'>TICKET NUMBER</td>";
+    myTable+= "<td style='margin: 0px; color: red; text-align: center;'>SLA TIME</td>";
     myTable+="</tr>";
 
     for (i = 0; i < count; i++) {
@@ -33,42 +44,48 @@ function writeTable(count) {
     }
 
     myTable+="</table>";
-
     table.innerHTML = myTable;
 }
 
 function readCount() {
-    testc = document.getElementById('testlinecount');
-    testc.innerText = window.location.href;
+    data=$('#SLAtimes').contents().text().split(" ").length - 1;
+    return data;
+}
 
-    file=window.location.href;
-    file=file.substr(0, file.lastIndexOf("/"));
-    file+="/";
-    file+="SLAtimes";
+function reloadIFrame() {
+    document.getElementById("SLAtimes").src="SLAtimes.html";
+}
 
-    testc.innerText+=" ";
-    testc.innerText+=file;
+function populateTable() {
+    data=$('#SLAtimes').contents().text().split(/ |Z/);
+    table=document.getElementById("tablePrint");
 
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-
-    testc.innerText=rawFile.responseText;
-
-    rawFile.onreadystatechange = function ()
+    for (i = 0; i < ticketCount.count; i++)
     {
-//        if(rawFile.readyState === 4)
-//        {
-            testc.innerText="this far at least!";
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                testc.innerText = allText;
-            }
-//        }
+        num="number" + i;
+        time="time" + i;
+        document.getElementById(num).innerHTML = data[i * 2];
+        createTimer(formatDate(data[(i * 2) + 1]), document.getElementById(time));
     }
 }
 
+function formatDate(time) {
+        utime=Date.parse(time)/1000;
+        ctime= + Date;
+        ctime=Math.round((new Date()).getTime() / 1000);
+        time=utime-ctime;
+        time=time-25200; //HARDCODED TIMESHIFT FOR PDT
+        return time;
+}
+
+function fullReload() {
+    reloadIFrame();
+    ticketCount.count=readCount();
+    writeTable(ticketCount.count);
+        populateTable();
+}
+
 window.onload = function () {
-    writeTable(3);
-    readCount();
+    fullReload();
+    window.setInterval("fullReload()", 180000);
 };
