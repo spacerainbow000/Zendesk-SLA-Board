@@ -26,8 +26,8 @@ function createTimer(duration, element) {
 
 function writeTable(count) {
     table = document.querySelector('#tableprint');
-    var myTable="<table border='1'><tr><td style='margin: 0px; color: red;'>TICKET NUMBER</td>";
-    myTable+= "<td style='margin: 0px; color: red; text-align: center;'>SLA TIME</td>";
+    var myTable="<table width='100%' border='1'><tr><td width='50%' style='margin: 0px; color: red;'>TICKET NUMBER</td>";
+    myTable+= "<td width='50%' style='margin: 0px; color: red; text-align: center;'>SLA TIME</td>";
     myTable+="</tr>";
 
     for (i = 0; i < count; i++) {
