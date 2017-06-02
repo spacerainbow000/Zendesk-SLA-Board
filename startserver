@@ -1,5 +1,5 @@
 #!/bin/bash
-touch log
+> log
 touch opentickets
-touch SLAtimes
-python srv.py |& tee -a log > /dev/null &
+touch SLAtimes.html
+python -u srv.py | tee -a log >/dev/null &
