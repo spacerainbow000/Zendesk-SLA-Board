@@ -11,16 +11,14 @@ function createTimer(duration, element) {
     element.textContent = hours + ":" + minutes + ":" + seconds;
 
     setInterval(function () {
-                cc= (3600 * hours) + (60 * minutes) + seconds;
-                console.log("initial cc of " + element.id + " is " + cc);
-                if (--cc <= 0)
+                sec_num -= 1;
+                if (sec_num <= 0)
                         element.textContent = "BREACHED!!!"
                 else
                 {
-//                      hours   = Math.floor(cc / 3600);
-                        minutes = Math.floor((cc - (hours * 3600)) / 60);
-                        seconds = cc - (hours * 3600) - (minutes * 60);
-                        console.log("setting hours of element " + element.id + " to " + hours + "; cc is " + cc);
+                        hours   = Math.floor(sec_num / 3600);
+                        minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+                        seconds = sec_num - (hours * 3600) - (minutes * 60);
                         element.textContent = hours + ":" + minutes + ":" + seconds;
                 }
     }, 1000);
