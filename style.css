@@ -1,5 +1,6 @@
 body {
     background-color: #faffff;
+    color: #000000;
 }
 
 h1 {
@@ -35,6 +36,5 @@ tr {
 
 #SLAtimes {
     white-space: pre;
-    height: 0;
-    width: 0;
+    display: none;
 }
