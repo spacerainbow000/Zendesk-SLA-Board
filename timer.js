@@ -16,6 +16,9 @@ function createTimer(duration, element) {
             element.textContent = "BREACHED!!!"
         else
         {
+            if (sec_num <= 1800) {
+                element.style.color = (element.style.color == 'red') ? 'black' : 'red';
+            }
             hours   = Math.floor(sec_num / 3600);
             minutes = Math.floor((sec_num - (hours * 3600)) / 60);
             seconds = sec_num - (hours * 3600) - (minutes * 60);
