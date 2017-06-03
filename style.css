@@ -1,33 +1,40 @@
+body {
+    background-color: #faffff;
+}
+
 h1 {
-    text-align: center;
+    color: #5fba7d;
     font-family: Arial, Helvetica, Sans-Serif;
+    text-align: center;
 }
 
 table {
-    width: 100%;
     border: 1px solid #eee;
     border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    color: #5fba7d;
 }
 
 th, td {
-    width: 50%;
-    margin: 0px;
     font-family: Arial, Helvetica, Sans-Serif;
+    margin: 0px;
+    width: 50%;
 }
 
 td {
+    font-size: 90%;
     text-align: center;
-    width: 100px;
 }
 
 tr {
     border-bottom: 1px solid #eee;
 }
 
-.ticket_num {
-    color: green;
-}
-
-.sla {
-    color: red;
+#SLAtimes {
+    white-space: pre;
+    height: 0;
+    width: 0;
 }
