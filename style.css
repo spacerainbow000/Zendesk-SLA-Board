@@ -3,6 +3,31 @@ h1 {
     font-family: Arial, Helvetica, Sans-Serif;
 }
 
-p {
-    text-indent:20px;
+table {
+    width: 100%;
+    border: 1px solid #eee;
+    border-collapse: collapse;
+}
+
+th, td {
+    width: 50%;
+    margin: 0px;
+    font-family: Arial, Helvetica, Sans-Serif;
+}
+
+td {
+    text-align: center;
+    width: 100px;
+}
+
+tr {
+    border-bottom: 1px solid #eee;
+}
+
+.ticket_num {
+    color: green;
+}
+
+.sla {
+    color: red;
 }
