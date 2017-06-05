@@ -8,6 +8,10 @@ function createTimer(duration, element) {
     minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     seconds = sec_num - (hours * 3600) - (minutes * 60);
 
+    hours   = (hours < 10) ? ("0" + hours) : hours;
+    minutes = (minutes < 10) ? ("0" + minutes) : minutes;
+    seconds = (seconds < 10) ? ("0" + seconds) : seconds;
+
     element.textContent = hours + ":" + minutes + ":" + seconds;
 
     setInterval(function () {
@@ -22,6 +26,11 @@ function createTimer(duration, element) {
             hours   = Math.floor(sec_num / 3600);
             minutes = Math.floor((sec_num - (hours * 3600)) / 60);
             seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+            hours   = (hours < 10) ? ("0" + hours) : hours;
+            minutes = (minutes < 10) ? ("0" + minutes) : minutes;
+            seconds = (seconds < 10) ? ("0" + seconds) : seconds;
+
             element.textContent = hours + ":" + minutes + ":" + seconds;
         }
     }, 1000);
