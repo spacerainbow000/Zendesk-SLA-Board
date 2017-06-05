@@ -1,0 +1,40 @@
+body {
+    background-color: #faffff;
+    color: #000000;
+}
+
+h1 {
+    color: #5fba7d;
+    font-family: Arial, Helvetica, Sans-Serif;
+    text-align: center;
+}
+
+table {
+    border: 1px solid #eee;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    color: #5fba7d;
+}
+
+th, td {
+    font-family: Arial, Helvetica, Sans-Serif;
+    margin: 0px;
+    width: 50%;
+}
+
+td {
+    font-size: 90%;
+    text-align: center;
+}
+
+tr {
+    border-bottom: 1px solid #eee;
+}
+
+#SLAtimes {
+    white-space: pre;
+    display: none;
+}
