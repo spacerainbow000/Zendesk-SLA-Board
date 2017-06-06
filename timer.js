@@ -54,7 +54,7 @@ function writeTable(count) {
     myTable+="</tr>";
 
     for (i = 0; i < count; i++) {
-        myTable+="<tr id='ticket_row'>";
+        myTable+="<tr>";
         myTable+="<td id='number";
         myTable+=i;
         myTable+="'></td>";
