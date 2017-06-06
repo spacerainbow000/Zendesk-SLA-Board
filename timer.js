@@ -12,7 +12,8 @@ function createTimer(duration, row_index) {
     minutes = (minutes < 10) ? ("0" + minutes) : minutes;
     seconds = (seconds < 10) ? ("0" + seconds) : seconds;
 
-    $("#time" + row_index).html(hours + ":" + minutes + ":" + seconds);
+	eid="time" + row_index;
+    document.getElementById(eid).textContent=(hours + ":" + minutes + ":" + seconds);
 
     setInterval(function () {
         sec_num -= 1;
