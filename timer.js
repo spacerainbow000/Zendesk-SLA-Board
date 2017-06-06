@@ -1,6 +1,6 @@
 var ticketCount = {};
 
-function createTimer(duration, element) {
+function createTimer(duration, row_index) {
 
     var timer = duration, minutes, seconds;
     var sec_num = parseInt(duration, 10);
@@ -12,7 +12,7 @@ function createTimer(duration, element) {
     minutes = (minutes < 10) ? ("0" + minutes) : minutes;
     seconds = (seconds < 10) ? ("0" + seconds) : seconds;
 
-    element.textContent = hours + ":" + minutes + ":" + seconds;
+    $("#time" + row_index).html(hours + ":" + minutes + ":" + seconds);
 
     setInterval(function () {
         sec_num -= 1;
@@ -21,7 +21,18 @@ function createTimer(duration, element) {
         else
         {
             if (sec_num <= 1800) {
-                element.style.color = (element.style.color == 'red') ? 'black' : 'red';
+                if ($("#number" + row_index).css('color') == 'rgb(0, 0, 0)') {
+                    $("#number" + row_index).css('background-color', 'red');
+                    $("#time" + row_index).css('background-color', 'red');
+                    $("#number" + row_index).css('color','white');
+                    $("#time" + row_index).css('color','white');
+                }
+                else {
+                    $("#number" + row_index).css('background-color', '#faffff');
+                    $("#time" + row_index).css('background-color', '#faffff');
+                    $("#number" + row_index).css('color','black');
+                    $("#time" + row_index).css('color','black');
+                }
             }
             hours   = Math.floor(sec_num / 3600);
             minutes = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -31,7 +42,7 @@ function createTimer(duration, element) {
             minutes = (minutes < 10) ? ("0" + minutes) : minutes;
             seconds = (seconds < 10) ? ("0" + seconds) : seconds;
 
-            element.textContent = hours + ":" + minutes + ":" + seconds;
+            $("#time" + row_index).html(hours + ":" + minutes + ":" + seconds);
         }
     }, 1000);
 }
@@ -44,12 +55,12 @@ function writeTable(count) {
 
     for (i = 0; i < count; i++) {
         myTable+="<tr>";
-        myTable+="<td><span id='number";
+        myTable+="<td id='number";
         myTable+=i;
-        myTable+="'></span></td>";
-        myTable+="<td><span id='time";
+        myTable+="'></td>";
+        myTable+="<td id='time";
         myTable+=i;
-        myTable+="'></span></td>";
+        myTable+="'></td>";
         myTable+="</tr>";
     }
 
@@ -75,7 +86,7 @@ function populateTable() {
         num="number" + i;
         time="time" + i;
         document.getElementById(num).innerHTML = data[i * 2];
-        createTimer(formatDate(data[(i * 2) + 1]), document.getElementById(time));
+        createTimer(formatDate(data[(i * 2) + 1]), i);
     }
 }
 
