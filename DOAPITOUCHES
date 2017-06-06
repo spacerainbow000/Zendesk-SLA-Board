@@ -1,4 +1,6 @@
 #!/bin/bash
 
 ./getopentickets
+./getnewtickets
+cat newtickets >> opentickets
 ./pullSLAs
