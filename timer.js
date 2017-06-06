@@ -28,8 +28,8 @@ function createTimer(duration, row_index) {
                     $("#time" + row_index).css('color','white');
                 }
                 else {
-                    $("#number" + row_index).css('background-color', '#faffff');
-                    $("#time" + row_index).css('background-color', '#faffff');
+                    $("#number" + row_index).css('background-color', '#f8f8ff');
+                    $("#time" + row_index).css('background-color', '#f8f8ff');
                     $("#number" + row_index).css('color','black');
                     $("#time" + row_index).css('color','black');
                 }
