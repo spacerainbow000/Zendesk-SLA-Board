@@ -1,0 +1,13 @@
+#!/bin/bash
+chmod +x DOAPITOUCHES
+chmod +x getnewtickets
+chmod +x getopentickets
+chmod +x killserver
+chmod +x pullSLAs
+chmod +x startserver
+chmod +u DOAPITOUCHES
+chmod +u getnewtickets
+chmod +u getopentickets
+chmod +u killserver
+chmod +u pullSLAs
+chmod +u startserver
