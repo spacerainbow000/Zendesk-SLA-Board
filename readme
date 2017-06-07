@@ -11,3 +11,5 @@ target: zendesk URL
 token: API token
 run ./startserver
 go to 127.0.0.1:65000 in a browser
+
+***This project is completed as of 6/7/2017***
