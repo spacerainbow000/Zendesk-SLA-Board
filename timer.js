@@ -1,50 +1,53 @@
 var ticketCount = {};
 
 function createTimer(duration, row_index) {
-
-    var timer = duration, minutes, seconds;
+    var eid = "time" + row_index;
     var sec_num = parseInt(duration, 10);
-    hours   = Math.floor(sec_num / 3600);
-    minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
     hours   = (hours < 10) ? ("0" + hours) : hours;
     minutes = (minutes < 10) ? ("0" + minutes) : minutes;
     seconds = (seconds < 10) ? ("0" + seconds) : seconds;
 
-	eid="time" + row_index;
-    document.getElementById(eid).textContent=(hours + ":" + minutes + ":" + seconds);
+    document.getElementById(eid).textContent = hours + ":" + minutes + ":" + seconds;
 
-    setInterval(function () {
-        sec_num -= 1;
-        if (sec_num <= 0)
-            element.textContent = "BREACHED!!!"
-        else
-        {
-            if (sec_num <= 1800) {
-                if ($("#number" + row_index).css('color') == 'rgb(0, 0, 0)') {
-                    $("#number" + row_index).css('background-color', 'red');
-                    $("#time" + row_index).css('background-color', 'red');
-                    $("#number" + row_index).css('color','white');
-                    $("#time" + row_index).css('color','white');
-                }
-                else {
-                    $("#number" + row_index).css('background-color', '#f8f8ff');
-                    $("#time" + row_index).css('background-color', '#f8f8ff');
-                    $("#number" + row_index).css('color','black');
-                    $("#time" + row_index).css('color','black');
-                }
+    setTimeout(updateTimer(sec_num - 1, "#number" + row_index, eid), 1000);
+}
+
+function updateTimer(sec_num, tic_num, eid) {
+    if (sec_num <= 0)
+        document.getElementById(eid).textContent = "BREACHED!!!"
+    else
+    {
+        if (sec_num <= 1800) {
+            if ($(tic_num).css('color') == 'rgb(0, 0, 0)') {
+                $(tic_num).css('background-color', 'red');
+                $("#" + eid).css('background-color', 'red');
+                $(tic_num).css('color','white');
+                $("#" + eid).css('color','white');
             }
-            hours   = Math.floor(sec_num / 3600);
-            minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-            seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-            hours   = (hours < 10) ? ("0" + hours) : hours;
-            minutes = (minutes < 10) ? ("0" + minutes) : minutes;
-            seconds = (seconds < 10) ? ("0" + seconds) : seconds;
-
-            $("#time" + row_index).html(hours + ":" + minutes + ":" + seconds);
+            else {
+                $(tic_num).css('background-color', '#f8f8ff');
+                $("#" + eid).css('background-color', '#f8f8ff');
+                $(tic_num).css('color','black');
+                $("#" + eid).css('color','black');
+            }
         }
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+        hours   = (hours < 10) ? ("0" + hours) : hours;
+        minutes = (minutes < 10) ? ("0" + minutes) : minutes;
+        seconds = (seconds < 10) ? ("0" + seconds) : seconds;
+
+        document.getElementById(eid).textContent = hours + ":" + minutes + ":" + seconds;
+    }
+
+    setTimeout(function() {
+        updateTimer(sec_num - 1, tic_num, eid);
     }, 1000);
 }
 
@@ -85,7 +88,6 @@ function populateTable() {
     for (i = 0; i < ticketCount.count; i++)
     {
         num="number" + i;
-        time="time" + i;
         document.getElementById(num).innerHTML = data[i * 2];
         createTimer(formatDate(data[(i * 2) + 1]), i);
     }
