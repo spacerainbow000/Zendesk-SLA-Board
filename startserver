@@ -1,5 +1,8 @@
 #!/bin/bash
 > log
 touch opentickets
+touch newtickets
+touch pendingtickets
+touch onholdtickets
 touch SLAtimes.html
 python -u srv.py | tee -a log >/dev/null &
