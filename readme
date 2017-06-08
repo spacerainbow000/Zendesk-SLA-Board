@@ -9,6 +9,7 @@ create the following files
 creds: your login username (a@b.c)
 target: zendesk URL
 token: API token
+run bash quickinit
 run ./startserver
 go to 127.0.0.1:65000 in a browser
 
