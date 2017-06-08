@@ -1,6 +1,5 @@
 #!/bin/bash
 
-> SLAtimes.html
 mkdir -p tmpd
 rm -r tmpd/*
 
