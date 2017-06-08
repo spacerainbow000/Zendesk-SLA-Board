@@ -3,6 +3,8 @@ creds
 log
 newtickets
 opentickets
+pendingtickets
+onholdtickets
 target
 token
 tmpd/
