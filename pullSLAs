@@ -14,7 +14,7 @@ while read i; do
         echo "$i" $( breachtime=$(curl -s -u $CREDENTIALS/token:$TOKEN "https://$TARGET/api/v2/tickets/$i.json?include=slas" | ruby prettify_json.rb | grep breach_at | awk '{print $2}' | sed 's/\"//g' | sed 's/.$//') ; if [ -z $breachtime ]; then echo "null" ; else echo $breachtime; fi ) > $tmpf &
 done <opentickets
 
-sleep 2
+wait
 
 cat tmpd/* | grep -v null | awk '{print $0"<br>"}' > SLAtimes.html
 sort -k2 SLAtimes.html > tmp && mv tmp SLAtimes.html
