@@ -21,7 +21,7 @@ function updateTimer(sec_num, tic_num, eid) {
         document.getElementById(eid).textContent = "BREACHED!!!"
     else
     {
-        if (sec_num <= 1800) {
+        if (sec_num <= 3600) {
             if ($(tic_num).css('color') == 'rgb(0, 0, 0)') {
                 $(tic_num).css('background-color', 'red');
                 $("#" + eid).css('background-color', 'red');
