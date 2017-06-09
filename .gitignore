@@ -1,4 +1,5 @@
 SLAtimes.html
+assignees.html
 creds
 log
 newtickets
@@ -8,3 +9,4 @@ onholdtickets
 target
 token
 tmpd/
+tmpl/
