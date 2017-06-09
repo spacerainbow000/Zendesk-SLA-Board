@@ -17,7 +17,7 @@ table {
 }
 
 th {
-    font-size: 210%;
+        font-size: 210%;
     color: #5fba7d;
 }
 
@@ -28,7 +28,7 @@ th, td {
 }
 
 td {
-    font-size: 100%;
+    font-size: 200%;
     text-align: center;
 }
 
@@ -37,6 +37,11 @@ tr {
 }
 
 #SLAtimes {
+    white-space: pre;
+    display: none;
+}
+
+#assignees {
     white-space: pre;
     display: none;
 }
