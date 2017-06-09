@@ -12,3 +12,4 @@ cat pendingtickets >> opentickets
 cat onholdtickets >> opentickets
 
 ./pullSLAs
+./pullassignees
