@@ -17,14 +17,14 @@ table {
 }
 
 th {
-        font-size: 210%;
+    font-size: 210%;
     color: #5fba7d;
 }
 
 th, td {
     font-family: Arial, Helvetica, Sans-Serif;
     margin: 0px;
-    width: 50%;
+    width: calc(100%/3);
 }
 
 td {
