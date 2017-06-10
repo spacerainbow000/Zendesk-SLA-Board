@@ -58,8 +58,8 @@ function updateTimer(sec_num, tic_num, asn_num, eid) {
 function writeTable(count) {
     table = document.querySelector('#tablePrint');
     var myTable ="<table><tr><th>Ticket ID</th>";
-    myTable+= "<th>Assignee</th>";
     myTable+= "<th>Next SLA Breach</th>";
+    myTable+= "<th>Assignee</th>";
     myTable+="</tr>";
 
     for (i = 0; i < count; i++) {
