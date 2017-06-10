@@ -52,8 +52,9 @@ function updateTimer(sec_num, tic_num, eid) {
 }
 
 function writeTable(count) {
-    table = document.querySelector('#tableprint');
+    table = document.querySelector('#tablePrint');
     var myTable ="<table><tr><th>Ticket ID</th>";
+    myTable+= "<th>Assignee</th>";
     myTable+= "<th>Next SLA Breach</th>";
     myTable+="</tr>";
 
@@ -62,6 +63,9 @@ function writeTable(count) {
         myTable+="<td id='number";
         myTable+=i;
         myTable+="'></td>";
+        myTable+="<td id='assignee";
+        myTable+=i;
+        myTable+="'>";
         myTable+="<td id='time";
         myTable+=i;
         myTable+="'></td>";
@@ -83,12 +87,15 @@ function reloadIFrame() {
 
 function populateTable() {
     data=$('#SLAtimes').contents().text().split(/ |Z/);
+    data2=$('#assignees').contents().text().split("\n");
     table=document.getElementById("tablePrint");
 
     for (i = 0; i < ticketCount.count; i++)
     {
         num="number" + i;
+        asn="assignee" + i;
         document.getElementById(num).innerHTML = data[i * 2];
+        document.getElementById(asn).innerHTML = data2[i].substr(data2[i].indexOf(" ") + 1);
         createTimer(formatDate(data[(i * 2) + 1]), i);
     }
 }
