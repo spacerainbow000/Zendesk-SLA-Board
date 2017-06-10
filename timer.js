@@ -13,10 +13,10 @@ function createTimer(duration, row_index) {
 
     document.getElementById(eid).textContent = hours + ":" + minutes + ":" + seconds;
 
-    setTimeout(updateTimer(sec_num - 1, "#number" + row_index, eid), 1000);
+    setTimeout(updateTimer(sec_num - 1, "#number" + row_index, "#assignee" + row_index, eid), 1000);
 }
 
-function updateTimer(sec_num, tic_num, eid) {
+function updateTimer(sec_num, tic_num, asn_num, eid) {
     if (sec_num <= 0)
         document.getElementById(eid).textContent = "BREACHED!!!"
     else
@@ -24,14 +24,18 @@ function updateTimer(sec_num, tic_num, eid) {
         if (sec_num <= 3600) {
             if ($(tic_num).css('color') == 'rgb(0, 0, 0)') {
                 $(tic_num).css('background-color', 'red');
+                $(asn_num).css('background-color', 'red');
                 $("#" + eid).css('background-color', 'red');
                 $(tic_num).css('color','white');
+                $(asn_num).css('color', 'white');
                 $("#" + eid).css('color','white');
             }
             else {
                 $(tic_num).css('background-color', '#f8f8ff');
+                $(asn_num).css('background-color', '#f8f8ff');
                 $("#" + eid).css('background-color', '#f8f8ff');
                 $(tic_num).css('color','black');
+                $(asn_num).css('color','black');
                 $("#" + eid).css('color','black');
             }
         }
@@ -47,7 +51,7 @@ function updateTimer(sec_num, tic_num, eid) {
     }
 
     setTimeout(function() {
-        updateTimer(sec_num - 1, tic_num, eid);
+        updateTimer(sec_num - 1, tic_num, asn_num, eid);
     }, 1000);
 }
 
@@ -63,10 +67,10 @@ function writeTable(count) {
         myTable+="<td id='number";
         myTable+=i;
         myTable+="'></td>";
-        myTable+="<td id='assignee";
+        myTable+="<td id='time";
         myTable+=i;
         myTable+="'>";
-        myTable+="<td id='time";
+        myTable+="<td id='assignee";
         myTable+=i;
         myTable+="'></td>";
         myTable+="</tr>";
