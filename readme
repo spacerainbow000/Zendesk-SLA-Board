@@ -5,7 +5,7 @@ ideally don't be running any other python
 
 run:
 pull everything into an empty directory
-create the following files
+create the following files (each should be a separate file)
 creds: your login username (a@b.c)
 target: zendesk URL
 token: API token
