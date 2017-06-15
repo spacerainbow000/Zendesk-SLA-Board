@@ -26,7 +26,7 @@ print "Serving HTTP on" + str(sa[0]) + "port" + str(sa[1]) + "..."
 def updateopentickets():
     print "pulled times at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     subprocess.call("bash DOAPITOUCHES >> log", shell=True)
-    threading.Timer(120, updateopentickets).start()
+    threading.Timer(60, updateopentickets).start()
 
 updateopentickets()
 
