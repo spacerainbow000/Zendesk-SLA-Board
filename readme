@@ -13,4 +13,8 @@ run bash quickinit
 run ./startserver
 go to 127.0.0.1:65000 in a browser
 
-***This project is completed as of 6/7/2017***
+for next release:
+
+breached tickets are displayed in solid red (done)
+add a button in the UI that calls ./DOAPITOUCHES
+have a config file that maps customer tier to color
