@@ -7,11 +7,12 @@ run:
 pull everything into an empty directory
 create the following files (each should be a separate file)
 creds: your login username (a@b.c)
-target: zendesk URL
+target: zendesk URL (don't add an 'https:// !!! it will be added for you !!!)
 token: API token
 run bash quickinit
 run ./startserver
 go to 127.0.0.1:65000 in a browser
+open board.html
 
 for next release:
 
