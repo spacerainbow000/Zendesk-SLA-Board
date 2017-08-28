@@ -10,7 +10,7 @@ TARGET=$(cat target)
 while read i; do
         touch $(pwd)/tmpd/$i
         tmpf=$(pwd)/tmpd/$i
-        echo "$i" $( breachtime=$(curl -s -u $CREDENTIALS/token:$TOKEN "https://$TARGET/api/v2/tickets/$i.json?include=slas" | ruby prettify_json.rb | grep breach_at | awk '{print $2}' | sed 's/\"//g' | sed 's/.$//') ; if [ -z $breachtime ]; then echo "null" ; else echo $breachtime; fi ) > $tmpf &
+        echo "$i" $( breachtime=$(curl -s -u $CREDENTIALS/token:$TOKEN "https://$TARGET/api/v2/tickets/${i}.json?include=slas" | ruby prettify_json.rb | grep breach_at | awk '{print $2}' | sed 's/\"//g' | sed 's/.$//') ; if [ -z $breachtime ]; then echo "null" ; else echo $breachtime; fi ) > $tmpf &
 done <opentickets
 
 wait
