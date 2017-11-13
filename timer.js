@@ -116,7 +116,8 @@ function formatDate(time) {
     ctime= + Date;
     ctime=Math.round((new Date()).getTime() / 1000);
     time=utime-ctime;
-    time=time-25200; //HARDCODED TIMESHIFT FOR PDT
+    time=(time-((new Date()).getTimezoneOffset() * 60));
+    //time=time-25200; //HARDCODED TIMESHIFT FOR PDT
     return time;
 }
 
