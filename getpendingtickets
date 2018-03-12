@@ -1,9 +1,0 @@
-#!/bin/bash
-TOKEN=$(cat token)
-CREDENTIALS=$(cat creds)
-TARGET=$(cat target)
-
-OPENTICKETS=$(curl -s -u $CREDENTIALS/token:$TOKEN "https://$TARGET/api/v2/search.json?include=" -G --data-urlencode "query=type:ticket status:pending")
-OPENTICKETS=$(echo $OPENTICKETS | ruby prettify_json.rb | sed '/fields/,/]/d' | egrep -i '"id"' | grep -v 'raw_subject' | grep -v '"description"' | awk '{print $2}' | sed 's/.$//')
-
-echo "$OPENTICKETS" > pendingtickets
