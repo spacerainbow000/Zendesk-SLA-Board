@@ -3,7 +3,10 @@ install python, and the following packages:
 pyjq requests configparser
 
 install:
-curl install script
+if you trust me, run the following command from the directory you wish to install in:
+  curl https://raw.githubusercontent.com/spacerainbow000/Zendesk-SLA-Board/master/install.sh | bash
+if you installed dependencies manually, run this instead:
+  curl https://raw.githubusercontent.com/spacerainbow000/Zendesk-SLA-Board/master/install.sh | bash -s override
 
 for next release:
 add a button in the UI that refreshes the ticket list
