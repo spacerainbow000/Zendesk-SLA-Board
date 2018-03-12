@@ -3,7 +3,7 @@
 
 # install dependencies
 # install dev tools
-if [[ $1 != "--override" ]];
+if [[ $1 != "override" ]];
 then
     command -v yum >/dev/null 2>&1 && { #rhel-like
         echo "installing dev tools with yum"
@@ -15,7 +15,7 @@ then
         apt -y install python
         apt -y install build-essential
         apt -y install autoconf automake libtool python-dev
-    } || echo "initial dev tool installation failed; run the steps from this script manually instead. run with --override to override this check." ; cat $0 ; exit 1
+    } || echo "initial dev tool installation failed; run the steps from this script manually instead. run with 'curl | bash -s override' to override this check." ; cat $0 ; exit 1
 fi
 
 # install pip
