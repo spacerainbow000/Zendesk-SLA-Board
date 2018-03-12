@@ -26,7 +26,7 @@ pip install requests configparser pyjq || pip install requests configparser pyjq
 
 # pull server files
 git clone https://github.com/spacerainbow000/Zendesk-SLA-Board.git
-cp Zendesk-SLA-Board/* .
+cp -f Zendesk-SLA-Board/* .
 rm -rf Zendesk-SLA-Board/
 chmod +x startserver
 chmod +x killserver
