@@ -81,7 +81,7 @@ def get_assignee(ticketdata):
     group = str(pyjq.all('.groups[].name', ticketdata)[0])
     try:
         assignee_id = int(pyjq.all('.ticket.assignee_id', ticketdata)[0])
-        assignee = pyjq.all('[ .users | .[] | select (.id==$uid) | [ .id, .name ] ] | .[]', ticketdata, vars={"uid": assignee_id})
+        assignee = pyjq.all('[ .users | .[] | select (.id==($uid | tonumber)) | [ .id, .name ] ] | .[]', ticketdata, vars={"uid": assignee_id}) #converted type as per https://stackoverflow.com/questions/41772776/numeric-argument-passed-with-jq-arg-not-matching-data-with
         assignee_str = str(assignee[0][1])
         return assignee_str
     except TypeError:
