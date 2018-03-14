@@ -123,9 +123,13 @@ function formatDate(time) {
 
 function fullReload() {
     reloadIFrame();
+    document.getElementById("SLAtimes").contentDocument.location.reload(true);
+    document.getElementById("assignees").contentDocument.location.reload(true);
+//    location.reload()
     ticketCount.count=readCount();
     writeTable(ticketCount.count);
     populateTable();
+
 }
 
 window.onload = function () {
