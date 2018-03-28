@@ -17,14 +17,15 @@ function createTimer(duration, row_index) {
 }
 
 function updateTimer(sec_num, tic_num, asn_num, eid) {
-    if (sec_num <= 0) {
-        document.getElementById(eid).textContent = "BREACHED!!!"
+    if (sec_num <= 0)
+    {
         $(tic_num).css('background-color', 'red');
         $(asn_num).css('background-color', 'red');
         $("#" + eid).css('background-color', 'red');
         $(tic_num).css('color','white');
         $(asn_num).css('color', 'white');
         $("#" + eid).css('color','white');
+        document.getElementById(eid).textContent = "BREACHED!!!"
     }
     else
     {
@@ -129,7 +130,6 @@ function fullReload() {
     ticketCount.count=readCount();
     writeTable(ticketCount.count);
     populateTable();
-
 }
 
 window.onload = function () {
