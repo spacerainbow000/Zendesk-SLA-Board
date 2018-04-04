@@ -38,6 +38,7 @@ echo "token = abc123" >> board.conf
 echo "target = abc.zendesk.com" >> board.conf
 echo "port = 80" >> board.conf
 echo "address = 127.0.0.1" >> board.conf
+echo "loglevel = info" >> board.conf
 echo " " >> board.conf
 echo "[users]" >> board.conf
 
