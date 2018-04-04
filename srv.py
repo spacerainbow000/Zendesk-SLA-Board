@@ -69,13 +69,13 @@ def get_sla(ticket):
     p = pyjq.all('.ticket.slas.policy_metrics[].breach_at', ticketdata)
     breachtime = str(p)
     if str(breachtime) != "[None]" and str(breachtime) != "[]":
-        b = str(p[0]) #actual breachtime string
-        ## assignee
-        assignee = get_assignee(ticketdata)
-        ## write
-        l_breachable = breachable(ticket = ticket, breachtime = b, assignee = assignee)
-        tickets_to_write.append(l_breachable)
-
+        if not "None" in str(breachtime):
+            b = str(p[0]) #actual breachtime string
+            ## assignee
+            assignee = get_assignee(ticketdata)
+            ## write
+            l_breachable = breachable(ticket = ticket, breachtime = b, assignee = assignee)
+            tickets_to_write.append(l_breachable)
 
 def get_assignee(ticketdata):
     group = str(pyjq.all('.groups[].name', ticketdata)[0])
