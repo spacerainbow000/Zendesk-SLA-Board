@@ -47,6 +47,7 @@ parser.read(config_path)
 token = parser.get('DEFAULT', 'token')
 credentials = parser.get('DEFAULT', 'credentials')
 target = parser.get('DEFAULT', 'target')
+loglevel = parser.get('DEFAULT', 'loglevel')
 
 #request config
 session = requests.Session()
@@ -61,6 +62,8 @@ def get_tickets():
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Aopen').content))
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Ahold').content))
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Apending').content))
+    if loglevel == "debug":
+        logwrite(opentickets)
     return opentickets
 
 def get_sla(ticket):
@@ -68,20 +71,24 @@ def get_sla(ticket):
     ## breachtime
     p = pyjq.all('.ticket.slas.policy_metrics[].breach_at', ticketdata)
     breachtime = str(p)
-    if str(breachtime) != "[None]" and str(breachtime) != "[]":
-        if not "None" in str(breachtime):
-            b = str(p[0]) #actual breachtime string
-            ## assignee
-            assignee = get_assignee(ticketdata)
-            ## write
-            l_breachable = breachable(ticket = ticket, breachtime = b, assignee = assignee)
-            tickets_to_write.append(l_breachable)
+    if loglevel == "debug":
+        logwrite("breach time for " + str(ticket) + " is " + breachtime)
+    if str(breachtime) != "[None]" and str(breachtime) != "[]" and str(breachtime) != "[None, None]":
+        b = str(p[0]) #actual breachtime string
+        if loglevel == "debug":
+            logwrite("breachable detected - breachtime : " + b)
+        ## assignee
+        assignee = get_assignee(ticketdata)
+        ## write
+        l_breachable = breachable(ticket = ticket, breachtime = b, assignee = assignee)
+        tickets_to_write.append(l_breachable)
+
 
 def get_assignee(ticketdata):
     group = str(pyjq.all('.groups[].name', ticketdata)[0])
     try:
         assignee_id = int(pyjq.all('.ticket.assignee_id', ticketdata)[0])
-        assignee = pyjq.all('[ .users | .[] | select (.id==($uid | tonumber)) | [ .id, .name ] ] | .[]', ticketdata, vars={"uid": assignee_id}) #converted type as per https://stackoverflow.com/questions/41772776/numeric-argument-passed-with-jq-arg-not-matching-data-with
+        assignee = pyjq.all('[ .users | .[] | select (.id==($uid | tonumber)) | [ .id, .name ] ] | .[]', ticketdata, vars={"uid": assignee_id})
         assignee_str = str(assignee[0][1])
         return assignee_str
     except TypeError:
@@ -128,18 +135,20 @@ def generate_breachable(ticket):
 def write_results():
     #sort results
     sorted_tickets = sorted(tickets_to_write, key=attrgetter('breachtime'))
-    fhandle = open('./SLAtimes.html', 'w') #blank out file
-    fhandle.close()
-    fhandle = open('./SLAtimes.html', "a")
+    fhandle = open('./SLAtimes.html', "w")
     for f in sorted_tickets:
         fhandle.write(str(f.ticket) + " " + str(f.breachtime) + "<br>\n")
     fhandle.close()
-    fhandle = open('./assignees.html', 'w') #blank out file
-    fhandle.close()
-    fhandle = open('./assignees.html', "a")
+    fhandle = open('./assignees.html', "w")
     for f in sorted_tickets:
         fhandle.write(str(f.ticket) + " " + str(f.assignee) + "<br>\n")
     fhandle.close()
+    fhandle.close()
+
+def logwrite(entry):
+     f = open('log', 'a')
+     f.write('DEBUG - %s \n' % str(entry))
+     f.close()
 
 class breachable:
     def __init__(self, ticket, breachtime, assignee):
@@ -159,8 +168,8 @@ HandlerClass = SimpleHTTPRequestHandler
 ServerClass  = BaseHTTPServer.HTTPServer
 Protocol     = "HTTP/1.0"
 
-port = int(parser.get('DEFAULT', 'port'))
-server_address = (parser.get('DEFAULT', 'address'), port)
+port = 80
+server_address = ('10.11.1.180', port)
 
 class OVERRIDELOG(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -171,8 +180,13 @@ httpd = ServerClass(server_address, OVERRIDELOG)
 sa = httpd.socket.getsockname()
 
 def updateopentickets():
-    main()
-    threading.Timer(120, updateopentickets).start()
+    try:
+        main()
+    except Exception, e:
+        f = open('log', 'a')
+        f.write('An exceptional thing happed - %s' % e)
+        f.close()
+    threading.Timer(60, updateopentickets).start()
 
 updateopentickets()
 
