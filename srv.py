@@ -176,8 +176,8 @@ HandlerClass = SimpleHTTPRequestHandler
 ServerClass  = BaseHTTPServer.HTTPServer
 Protocol     = "HTTP/1.0"
 
-port = 80
-server_address = ('10.11.1.180', port)
+port = int(parser.get('DEFAULT', 'port'))
+server_address = (parser.get('DEFAULT', 'address'), port) 
 
 class OVERRIDELOG(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
