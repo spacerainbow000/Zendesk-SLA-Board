@@ -62,8 +62,7 @@ def get_tickets():
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Aopen').content))
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Ahold').content))
     opentickets += pyjq.all('.results[].id', json.loads(session.get('https://' + target + '/api/v2/search.json?include=&query=type%3Aticket%20status%3Apending').content))
-    if loglevel == "debug":
-        logwrite(opentickets)
+    logwrite('testing tickets ' + str(opentickets), 'debug')
     return opentickets
 
 def get_sla(ticket):
@@ -71,12 +70,10 @@ def get_sla(ticket):
     ## breachtime
     p = pyjq.all('.ticket.slas.policy_metrics[].breach_at', ticketdata)
     breachtime = str(p)
-    if loglevel == "debug":
-        logwrite("breach time for " + str(ticket) + " is " + breachtime)
+    logwrite("breach time for " + str(ticket) + " is " + breachtime, 'debug')
     if str(breachtime) != "[None]" and str(breachtime) != "[]" and str(breachtime) != "[None, None]":
         b = str(p[0]) #actual breachtime string
-        if loglevel == "debug":
-            logwrite("breachable detected - breachtime : " + b)
+        logwrite("breachable detected - breachtime : " + b, 'debug')
         ## assignee
         assignee = get_assignee(ticketdata)
         ## write
@@ -86,13 +83,16 @@ def get_sla(ticket):
 
 def get_assignee(ticketdata):
     group = str(pyjq.all('.groups[].name', ticketdata)[0])
+    logwrite('getting assignee - got ' + group + ' so far', 'debug')
     try:
         assignee_id = int(pyjq.all('.ticket.assignee_id', ticketdata)[0])
         assignee = pyjq.all('[ .users | .[] | select (.id==($uid | tonumber)) | [ .id, .name ] ] | .[]', ticketdata, vars={"uid": assignee_id})
         assignee_str = str(assignee[0][1])
+        logwrite('assignee got - ' + assignee_str, 'debug')
         return assignee_str
     except TypeError:
         #no assignee user - return group instead
+        logwrite('exception during assignee check - returning group ' + str(group), 'debug')
         return group
 
 ### control
@@ -145,10 +145,18 @@ def write_results():
     fhandle.close()
     fhandle.close()
 
-def logwrite(entry):
-     f = open('log', 'a')
-     f.write('DEBUG - %s \n' % str(entry))
-     f.close()
+def logwrite(entry, loglevel_):
+    if loglevel.upper() == "DEBUG":
+        f = open('log', 'a')
+        f.write('[ %s ] [ %s ] %s' % (datetime.datetime.now().isoformat(), loglevel_.upper(), entry,))
+        f.write('\n')
+        f.close()
+    else:
+        if loglevel.upper() == loglevel_.upper():
+            f = open('log', 'a')
+            f.write('[ %s ] [ %s ] %s' % (datetime.datetime.now().isoformat(), loglevel_.upper(), entry,))
+            f.write('\n')
+            f.close()
 
 class breachable:
     def __init__(self, ticket, breachtime, assignee):
@@ -173,7 +181,7 @@ server_address = ('10.11.1.180', port)
 
 class OVERRIDELOG(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
-        open("log", "a").write("%s - - [%s] %s\n" % (self.address_string(), self.log_date_time_string(),format%args))
+        logwrite("%s - - %s %s" % (self.address_string(), self.log_date_time_string(),format%args), 'info')
 
 httpd = ServerClass(server_address, OVERRIDELOG)
 
@@ -183,9 +191,7 @@ def updateopentickets():
     try:
         main()
     except Exception, e:
-        f = open('log', 'a')
-        f.write('An exceptional thing happed - %s' % e)
-        f.close()
+        logwrite('An exceptional thing happed - %s' % (e,), 'error')
     threading.Timer(60, updateopentickets).start()
 
 updateopentickets()
