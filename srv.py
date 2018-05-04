@@ -196,4 +196,7 @@ def updateopentickets():
 
 updateopentickets()
 
-httpd.serve_forever()
+try:
+    httpd.serve_forever()
+except Exception, e:
+    logwrite('FATAL HTTP SERVER EXCEPTION - PRINTING STACK TRACE\n%s' % (e,), 'error')
