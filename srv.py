@@ -146,15 +146,22 @@ def write_results():
     fhandle.close()
 
 def logwrite(entry, loglevel_):
-    if loglevel.upper() == "DEBUG":
-        f = open('log', 'a')
-        f.write('[ %s ] [ %s ] %s' % (datetime.datetime.now().isoformat(), loglevel_.upper(), entry,))
-        f.write('\n')
-        f.close()
-    else:
+    try:
+        logrank = {
+            'ERROR': 1,
+            'INFO': 2,
+            'DEBUG': 3
+        }
+        if logrank[str(loglevel.upper())] >= logrank[str(loglevel_.upper())]:
+            f = open('log', 'a')
+            f.write('[ %s ] [ %s ] %s' % (datetime.now().isoformat(), loglevel_.upper(), entry,))
+            f.write('\n')
+            f.close()
+    except KeyError, e:
+        #unknown log level
         if loglevel.upper() == loglevel_.upper():
             f = open('log', 'a')
-            f.write('[ %s ] [ %s ] %s' % (datetime.datetime.now().isoformat(), loglevel_.upper(), entry,))
+            f.write('[ %s ] [ %s ] %s' % (datetime.now().isoformat(), loglevel_.upper(), entry,))
             f.write('\n')
             f.close()
 
